@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Analysis System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"], input[type="email"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .previous-terms {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .term-entry {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: white;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .submit-btn {
+            background-color: #28a745;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+        #previousTermsSection {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Performance Analysis System</h1>
+        <form action="/analyze" method="POST">
+            <div class="form-group">
+                <label for="name">Student Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="term">Current Term:</label>
+                <input type="text" id="term" name="term" value="Current Term" required>
+            </div>
+
+            <h3>Current Term Marks (out of 100):</h3>
+            <div class="subjects-grid">
+                <div class="form-group">
+                    <label for="nepali">Nepali:</label>
+                    <input type="number" id="nepali" name="nepali" min="0" max="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="english">English:</label>
+                    <input type="number" id="english" name="english" min="0" max="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mathematics">Mathematics:</label>
+                    <input type="number" id="mathematics" name="mathematics" min="0" max="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="science">Science:</label>
+                    <input type="number" id="science" name="science" min="0" max="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="social_arts">Social & Arts:</label>
+                    <input type="number" id="social_arts" name="social_arts" min="0" max="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="health_physical">Health & Physical:</label>
+                    <input type="number" id="health_physical" name="health_physical" min="0" max="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="computer">Computer:</label>
+                    <input type="number" id="computer" name="computer" min="0" max="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="attendance">Attendance (%):</label>
+                    <input type="number" id="attendance" name="attendance" min="0" max="100" required>
+                </div>
+            </div>
+
+            <h3>Behavioral Characteristics:</h3>
+            <div class="subjects-grid">
+                <div class="form-group">
+                    <label for="late_coming">Late Coming Frequency:</label>
+                    <select id="late_coming" name="late_coming" required>
+                        <option value="">Select...</option>
+                        <option value="Rarely">Rarely</option>
+                        <option value="Sometimes">Sometimes</option>
+                        <option value="Often">Often</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="assignment_submission">Assignment Submission:</label>
+                    <select id="assignment_submission" name="assignment_submission" required>
+                        <option value="">Select...</option>
+                        <option value="Regular">Regular</option>
+                        <option value="Irregular">Irregular</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="class_attention">Class Attention:</label>
+                    <select id="class_attention" name="class_attention" required>
+                        <option value="">Select...</option>
+                        <option value="Attentive">Attentive</option>
+                        <option value="Distracted">Distracted</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="responsibility">Responsibility Behavior:</label>
+                    <select id="responsibility" name="responsibility" required>
+                        <option value="">Select...</option>
+                        <option value="Responsible">Responsible</option>
+                        <option value="Irresponsible">Irresponsible</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="hasPreviousTerms" name="has_previous_terms" value="yes" onchange="togglePreviousTerms()">
+                    Include Previous Terms for Comparison
+                </label>
+            </div>
+
+            <div id="previousTermsSection" class="previous-terms">
+                <h3>Previous Terms Data:</h3>
+                <div id="previousTermsContainer">
+                    <!-- Previous terms will be added here dynamically -->
+                </div>
+                <button type="button" onclick="addPreviousTerm()">Add Previous Term</button>
+            </div>
+
+            <button type="submit" class="submit-btn">Analyze Performance</button>
+        </form>
+    </div>
+
+    <script>
+        function togglePreviousTerms() {
+            const checkbox = document.getElementById('hasPreviousTerms');
+            const section = document.getElementById('previousTermsSection');
+            section.style.display = checkbox.checked ? 'block' : 'none';
+        }
+
+        function addPreviousTerm() {
+            const container = document.getElementById('previousTermsContainer');
+            const termCount = container.children.length;
+
+            const termDiv = document.createElement('div');
+            termDiv.className = 'term-entry';
+            termDiv.innerHTML = `
+                <h4>Previous Term ${termCount + 1}</h4>
+                <div class="form-group">
+                    <label>Term Name:</label>
+                    <input type="text" name="previous_term_name[]" placeholder="e.g., First Term, Mid Term" required>
+                </div>
+                <div class="subjects-grid">
+                    <div class="form-group">
+                        <label>Nepali:</label>
+                        <input type="number" name="prev_nepali[]" min="0" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label>English:</label>
+                        <input type="number" name="prev_english[]" min="0" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mathematics:</label>
+                        <input type="number" name="prev_mathematics[]" min="0" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Science:</label>
+                        <input type="number" name="prev_science[]" min="0" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Social & Arts:</label>
+                        <input type="number" name="prev_social_arts[]" min="0" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Health & Physical:</label>
+                        <input type="number" name="prev_health_physical[]" min="0" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Computer:</label>
+                        <input type="number" name="prev_computer[]" min="0" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Attendance (%):</label>
+                        <input type="number" name="prev_attendance[]" min="0" max="100" required>
+                    </div>
+                </div>
+                <h5>Behavioral Characteristics:</h5>
+                <div class="subjects-grid">
+                    <div class="form-group">
+                        <label>Late Coming:</label>
+                        <select name="prev_late_coming[]" required>
+                            <option value="">Select...</option>
+                            <option value="Rarely">Rarely</option>
+                            <option value="Sometimes">Sometimes</option>
+                            <option value="Often">Often</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Assignment Submission:</label>
+                        <select name="prev_assignment_submission[]" required>
+                            <option value="">Select...</option>
+                            <option value="Regular">Regular</option>
+                            <option value="Irregular">Irregular</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Class Attention:</label>
+                        <select name="prev_class_attention[]" required>
+                            <option value="">Select...</option>
+                            <option value="Attentive">Attentive</option>
+                            <option value="Distracted">Distracted</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Responsibility:</label>
+                        <select name="prev_responsibility[]" required>
+                            <option value="">Select...</option>
+                            <option value="Responsible">Responsible</option>
+                            <option value="Irresponsible">Irresponsible</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" onclick="removeTerm(this)">Remove This Term</button>
+            `;
+            container.appendChild(termDiv);
+        }
+
+        function removeTerm(button) {
+            button.parentElement.remove();
+        }
+    </script>
+</body>
+</html>
